@@ -37,6 +37,8 @@ public class ConfigUtil {
     private static void upConfig() {
         // 1.0.4 添加拉取控制
         HandyConfigUtil.setPathIsNotContains(CONFIG, "onlyReward", false, Arrays.asList("是否只发奖励", "多子服连接同一个mysql的时候", "一个主服设置为false表示拉订单并发奖励(这个主服例如登陆服，玩家都必须进去过)", "其他子服都设置为true表示只发奖励不拉订单，避免重复拉取"), "config.yml");
+        // 1.1.1 可以自己控制域名
+        HandyConfigUtil.setPathIsNotContains(CONFIG, "afDianUrl", "afdian.net", null, "config.yml");
         CONFIG = HandyConfigUtil.load("config.yml");
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "configNotShopName", "&8[&c✘&8] &7OP没有配置 &a${shop} &7这个商品名称", null, "languages/" + CONFIG.getString("language") + ".yml");
         BaseConstants.LANG_CONFIG = HandyConfigUtil.loadLangConfig(CONFIG.getString("language"), true);

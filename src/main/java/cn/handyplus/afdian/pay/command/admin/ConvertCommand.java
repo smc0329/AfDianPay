@@ -61,7 +61,7 @@ public class ConvertCommand implements IHandyCommandEvent {
         SqlManagerUtil.enableSql();
 
         // 新连接创建表
-        Db.use(AfDianOrder.class).execution().create();
+        Db.use(AfDianOrder.class).createTable();
         // 插入数据
         Db.use(AfDianOrder.class).execution().insertBatch(all);
         MessageUtil.sendMessage(sender, "&4转换数据完成，请务必重启服务器，不然有可能会出现未知bug");

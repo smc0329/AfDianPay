@@ -2,6 +2,7 @@ package cn.handyplus.afdian.pay;
 
 import cn.handyplus.afdian.pay.hook.PlaceholderUtil;
 import cn.handyplus.afdian.pay.job.QueryOrderJob;
+import cn.handyplus.afdian.pay.util.AfDianUtil;
 import cn.handyplus.afdian.pay.util.ConfigUtil;
 import cn.handyplus.lib.InitApi;
 import cn.handyplus.lib.constants.BaseConstants;
@@ -44,6 +45,9 @@ public class AfDianPay extends JavaPlugin {
 
         // 初始化定时任务
         QueryOrderJob.init();
+
+        // 初始化域名
+        AfDianUtil.init();
 
         MessageUtil.sendConsoleMessage(ChatColor.GREEN + "已成功载入服务器!");
         MessageUtil.sendConsoleMessage(ChatColor.GREEN + "Author:handy WIKI: https://ricedoc.handyplus.cn/wiki/AfDianPay/README");
