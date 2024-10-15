@@ -21,18 +21,18 @@ import java.util.Map;
  */
 public class AfDianUtil {
 
-    private static String PING_URL = "https://afdian.net/api/open/ping";
-    private static String QUERY_ORDER_URL = "https://afdian.net/api/open/query-order";
-    private static String QUERY_SPONSOR_URL = "https://afdian.net/api/open/query-sponsor";
+    private static String PING_URL = "https://afdian.com/api/open/ping";
+    private static String QUERY_ORDER_URL = "https://afdian.com/api/open/query-order";
+    private static String QUERY_SPONSOR_URL = "https://afdian.com/api/open/query-sponsor";
 
     /**
      * 初始化域名
      */
     public static void init() {
-        String afDianUrl = ConfigUtil.CONFIG.getString("afDianUrl", "afdian.net");
-        PING_URL = PING_URL.replace("afdian.net", afDianUrl);
-        QUERY_ORDER_URL = QUERY_ORDER_URL.replace("afdian.net", afDianUrl);
-        QUERY_SPONSOR_URL = QUERY_SPONSOR_URL.replace("afdian.net", afDianUrl);
+        String afDianUrl = ConfigUtil.CONFIG.getString("afDianUrl", "afdian.com");
+        PING_URL = PING_URL.replace("afdian.com", afDianUrl);
+        QUERY_ORDER_URL = QUERY_ORDER_URL.replace("afdian.com", afDianUrl);
+        QUERY_SPONSOR_URL = QUERY_SPONSOR_URL.replace("afdian.com", afDianUrl);
     }
 
     /**

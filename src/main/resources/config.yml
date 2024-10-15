@@ -8,7 +8,7 @@ isCheckUpdate: true
 isCheckUpdateToOpMsg: true
 
 # 爱发电开发者信息,不正确的话插件不加载
-afDianUrl: "afdian.net"
+afDianUrl: "afdian.com"
 afDianToken: 123456
 afDianUserId: 123456
 
