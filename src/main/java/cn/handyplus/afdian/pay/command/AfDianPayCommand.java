@@ -24,15 +24,18 @@ import java.util.List;
 @HandyCommand(name = "afDianPay")
 public class AfDianPayCommand implements TabExecutor {
 
+    private final String PERMISSION = "afDianPay.reload";
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
         // 判断指令是否正确
         if (args.length < 1) {
-            return sendHelp(sender);
+            sendHelp(sender);
+            return true;
         }
         boolean rst = HandyCommandWrapper.onCommand(sender, cmd, label, args, BaseUtil.getMsgNotColor("noPermission"));
         if (!rst) {
-            return sendHelp(sender);
+            sendHelp(sender);
         }
         return true;
     }
@@ -41,7 +44,7 @@ public class AfDianPayCommand implements TabExecutor {
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
         List<String> completions = new ArrayList<>();
         List<String> commands = new ArrayList<>();
-        if (sender.hasPermission("afDianPay.reload")) {
+        if (sender.hasPermission(PERMISSION)) {
             commands = TabListEnum.returnList(args, args.length);
         }
         if (commands == null) {
@@ -56,22 +59,20 @@ public class AfDianPayCommand implements TabExecutor {
      * 发送帮助
      *
      * @param sender 发送人
-     * @return 消息
      */
-    private Boolean sendHelp(CommandSender sender) {
-        if (!sender.hasPermission("afDianPay.reload")) {
+    private void sendHelp(CommandSender sender) {
+        if (!sender.hasPermission(PERMISSION)) {
             List<String> playerHelps = ConfigUtil.LANG_CONFIG.getStringList("playerHelps");
             for (String help : playerHelps) {
                 MessageUtil.sendMessage(sender, help);
             }
-            return true;
+            return;
         }
 
         List<String> helps = ConfigUtil.LANG_CONFIG.getStringList("helps");
         for (String help : helps) {
             MessageUtil.sendMessage(sender, help);
         }
-        return true;
     }
 
 }

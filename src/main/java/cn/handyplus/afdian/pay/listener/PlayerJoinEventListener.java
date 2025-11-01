@@ -23,10 +23,6 @@ public class PlayerJoinEventListener implements Listener {
      */
     @EventHandler
     public void onOpPlayerJoin(PlayerJoinEvent event) {
-        // op登录发送更新提醒
-        if (!ConfigUtil.CONFIG.getBoolean(BaseConstants.IS_CHECK_UPDATE_TO_OP_MSG)) {
-            return;
-        }
         HandyHttpUtil.checkVersion(event.getPlayer());
     }
 

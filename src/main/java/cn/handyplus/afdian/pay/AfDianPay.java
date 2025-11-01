@@ -5,13 +5,11 @@ import cn.handyplus.afdian.pay.job.QueryOrderJob;
 import cn.handyplus.afdian.pay.util.AfDianUtil;
 import cn.handyplus.afdian.pay.util.ConfigUtil;
 import cn.handyplus.lib.InitApi;
-import cn.handyplus.lib.constants.BaseConstants;
+import cn.handyplus.lib.constants.HookPluginEnum;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.MessageUtil;
 import org.black_ixx.playerpoints.PlayerPoints;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -32,16 +30,19 @@ public class AfDianPay extends JavaPlugin {
         // 加载配置
         ConfigUtil.init();
         // 加载PlaceholderApi
-        this.loadPlaceholder();
+        USE_PAPI = BaseUtil.hook(HookPluginEnum.PLACEHOLDER_API);
+        if (USE_PAPI) {
+            new PlaceholderUtil(this).register();
+        }
         // 加载PlayerPoints
-        this.loadPlayerPoints();
+        BaseUtil.hookToPlugin(HookPluginEnum.PLAYER_POINTS).ifPresent(value -> PLAYER_POINTS = (PlayerPoints) value);
 
         // 初始化
         initApi.initCommand("cn.handyplus.afdian.pay.command")
                 .initListener("cn.handyplus.afdian.pay.listener")
                 .enableSql("cn.handyplus.afdian.pay.entity")
                 .addMetrics(17625)
-                .checkVersion(ConfigUtil.CONFIG.getBoolean(BaseConstants.IS_CHECK_UPDATE));
+                .checkVersion();
 
         // 初始化域名
         AfDianUtil.init();
@@ -58,30 +59,4 @@ public class AfDianPay extends JavaPlugin {
         InitApi.disable();
     }
 
-    /**
-     * 加载Placeholder
-     */
-    public void loadPlaceholder() {
-        if (Bukkit.getPluginManager().getPlugin(BaseConstants.PLACEHOLDER_API) != null) {
-            new PlaceholderUtil(this).register();
-            USE_PAPI = true;
-            MessageUtil.sendConsoleMessage(BaseUtil.getMsgNotColor("placeholderAPISucceedMsg"));
-            return;
-        }
-        USE_PAPI = false;
-        MessageUtil.sendConsoleMessage(BaseUtil.getMsgNotColor("placeholderAPIFailureMsg"));
-    }
-
-    /**
-     * 加载PlayerPoints
-     */
-    private void loadPlayerPoints() {
-        if (Bukkit.getPluginManager().getPlugin(BaseConstants.PLAYER_POINTS) != null) {
-            final Plugin plugin = this.getServer().getPluginManager().getPlugin(BaseConstants.PLAYER_POINTS);
-            PLAYER_POINTS = (PlayerPoints) plugin;
-            MessageUtil.sendConsoleMessage(BaseUtil.getMsgNotColor("playerPointsSucceedMsg"));
-            return;
-        }
-        MessageUtil.sendConsoleMessage(BaseUtil.getMsgNotColor("playerPointsFailureMsg"));
-    }
 }

@@ -36,7 +36,7 @@ public class DoneCommand implements IHandyCommandEvent {
     @Override
     public void onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // 参数是否正常
-        AssertUtil.notTrue(args.length < 2, sender, BaseUtil.getMsgNotColor("paramFailureMsg"));
+        AssertUtil.notTrue(args.length < 2, BaseUtil.getMsgNotColor("paramFailureMsg"));
         Optional<AfDianOrder> afDianOrderOptional = AfDianOrderService.getInstance().findByOrder(args[1]);
         if (!afDianOrderOptional.isPresent()) {
             MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("noOrder").replace("${order}", args[1]));

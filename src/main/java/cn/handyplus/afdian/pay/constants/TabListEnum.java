@@ -1,7 +1,7 @@
 package cn.handyplus.afdian.pay.constants;
 
 import cn.handyplus.afdian.pay.util.ConfigUtil;
-import cn.handyplus.lib.db.enums.DbTypeEnum;
+import cn.handyplus.lib.db.DbTypeEnum;
 import cn.handyplus.lib.util.BaseUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +22,7 @@ public enum TabListEnum {
     /**
      * 第一层提醒
      */
-    FIRST(Arrays.asList("convert", "reload", "reward", "send", "look", "getIp", "done"), 0, null, 1),
+    FIRST(Arrays.asList("convert", "reload", "reward", "send", "look", "done"), 0, null, 1),
 
     REWARD_TWO(Collections.singletonList(BaseUtil.getMsgNotColor("tabHelp.orderNumber")), 1, "reward", 2),
     LOOK_TWO(Collections.singletonList(BaseUtil.getMsgNotColor("tabHelp.orderNumber")), 1, "look", 2),

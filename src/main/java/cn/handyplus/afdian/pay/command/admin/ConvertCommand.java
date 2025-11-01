@@ -5,8 +5,8 @@ import cn.handyplus.afdian.pay.service.AfDianOrderService;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.db.Db;
+import cn.handyplus.lib.db.DbTypeEnum;
 import cn.handyplus.lib.db.SqlManagerUtil;
-import cn.handyplus.lib.db.enums.DbTypeEnum;
 import cn.handyplus.lib.util.AssertUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.HandyConfigUtil;
@@ -42,13 +42,13 @@ public class ConvertCommand implements IHandyCommandEvent {
     @Override
     public void onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // 参数是否正常
-        AssertUtil.notTrue(args.length < 2, sender, BaseUtil.getMsgNotColor("paramFailureMsg"));
+        AssertUtil.notTrue(args.length < 2, BaseUtil.getMsgNotColor("paramFailureMsg"));
         String storageMethod = args[1];
         if (!DbTypeEnum.MySQL.getType().equalsIgnoreCase(storageMethod) && !DbTypeEnum.SQLite.getType().equalsIgnoreCase(storageMethod)) {
             MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("paramFailureMsg"));
             return;
         }
-        if (storageMethod.equalsIgnoreCase(BaseConstants.STORAGE_CONFIG.getString(BaseConstants.STORAGE_METHOD))) {
+        if (storageMethod.equalsIgnoreCase(BaseConstants.STORAGE_CONFIG.getString(SqlManagerUtil.STORAGE_METHOD))) {
             MessageUtil.sendMessage(sender, "&4禁止转换！原因，您当前使用的存储方式已经为：" + storageMethod);
             return;
         }
@@ -58,7 +58,7 @@ public class ConvertCommand implements IHandyCommandEvent {
         // 修改链接方式
         HandyConfigUtil.setPath(BaseConstants.STORAGE_CONFIG, "storage-method", storageMethod, Collections.singletonList("存储方法(MySQL,SQLite)请复制括号内的类型,不要自己写"), "storage.yml");
         // 加载新连接
-        SqlManagerUtil.enableSql();
+        SqlManagerUtil.getInstance().enableSql();
 
         // 新连接创建表
         Db.use(AfDianOrder.class).createTable();
